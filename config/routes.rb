@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :posts
   get 'session/login'
   post 'session/create'
   get 'session/logout'
