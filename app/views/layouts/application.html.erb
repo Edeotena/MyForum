@@ -11,6 +11,13 @@
   </head>
 
   <body>
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <h5 class="navbar-text">
+          <%= link_to 'login', session_login_url %>
+        </h5>
+     </div>
+    </nav> <br>
     <%= yield %>
   </body>
 </html>
