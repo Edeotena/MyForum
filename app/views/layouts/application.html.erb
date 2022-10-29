@@ -14,7 +14,12 @@
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">
         <h5 class="navbar-text">
-          <%= link_to 'login', session_login_url %>
+          <% if @current_user != nil %>
+            You are logged in as <a href="/users/"><i><%= @current_user.name %></i></a>&nbsp &nbsp &nbsp
+            <%= link_to 'Log out', session_login_url %>
+          <% else %>
+            You are not logged
+          <% end %>
         </h5>
      </div>
     </nav> <br>

@@ -1,14 +1,38 @@
-<p style="color: green"><%= notice %></p>
+<span class="centered">Known users list:</span> <br> <br>
 
-<h1>Users</h1>
+<table class="table table-dark">
+  <thead>
+  <tr>
+    <th scope="col">Number</th>
+    <th scope="col">User name:</th>
+    <th scope="col">Last login at:</th>
+    <th scope="col">Is superuser:</th>
+    <th scope="col">Delete user:</th>
 
-<div id="users">
+  </tr>
+  </thead>
+
+  <tbody>
+  <% i = 0 %>
   <% @users.each do |user| %>
-    <%= render user %>
-    <p>
-      <%= link_to "Show this user", user %>
-    </p>
+    <tr>
+      <% i = i + 1 %>
+      <th scope="row"><%= i %></th>
+      <td><%= user.name %></td>
+      <td><%= user.last_login %></td>
+      <% if user.superuser %>
+        <td>Yes</td>
+      <% else %>
+        <td>No</td>
+      <% end %>
+      <% if @current_user&.id == user.id or @current_user.superuser%>
+        <td><%= link_to 'Delete user', user_path(user), method: :delete, class: 'btn btn-outline-danger'%></td>
+      <% else %>
+        <td>You are not allowed to do that!</td>
+      <% end %>
+    </tr>
   <% end %>
-</div>
+  </tbody>
+</table>
 
-<h5><%= link_to "Back to login page", session_login_path %></h5>
+<%= link_to 'Back to forum', posts_url, class:'btn btn-outline-warning' %>

@@ -4,35 +4,24 @@
   </div>
 <% end %>
 
-<h1>Welcome page</h1>
+<div class="card text-white bg-dark mb-3 text-center" style="width: 30rem;">
+  <div class="card-body">
+    <h1>Welcome page</h1>
 
-<h3>Please login to get access to forum</h3>
-
-<% if signed_in? %>
-  <h4 class="alert alert-info" style="width: fit-content">You are logged in as <i><%= @current_user.name %></i></h4>
-<% end %>
-
-<%= form_with url: session_create_url do |form| %>
-  <%= form.label :user, "User" %> <br>
-  <%= form.text_field :user, placeholder: 'user', required: true %> <br> <br>
-  <%= form.label :password %> <br>
-  <%= form.password_field :password, placeholder: '1234', required: true %> <br> <br>
-  <%= form.submit 'Log in', class:'btn btn-outline-primary'%>
-<% end %>
-
-<br>
-
-<% if !signed_in? %>
-  <%= link_to 'Sign in', new_user_path, class: 'btn btn-outline-success' %>
-  <br>
-<% else %>
-  <%= link_to 'Log out', session_logout_path, class:'btn btn-outline-warning' %>
-  <br> <br>
-  <h5><%= link_to 'Back to forum', posts_url%></h5>
-<% end %>
-
-<br>
-
-<h5><%= link_to 'Known users list', users_path %></h5>
-
-
+    <% if signed_in? %>
+      <h3>You are logged in as <i><%= @current_user.name %></i></h3> <br>
+      <%= link_to 'Log out', session_logout_path, class:'btn btn-outline-danger' %> <br> <br>
+      <%= link_to 'Back to forum', posts_url, class:'btn btn-outline-warning' %> <br> <br>
+    <% else %>
+      <h3>Please login to get access to forum</h3>
+      <%= form_with url: session_create_url do |form| %>
+        <i><%= form.label :user, "Username:" %></i>
+        <%= form.text_field :user, required: true %> <br>
+        <i><%= form.label :password, "Password:" %></i>
+        <%= form.password_field :password, required: true %> <br> <br>
+        <%= form.submit 'Log in', class:'btn btn-outline-primary'%> &nbsp&nbsp
+        <%= link_to 'Create user', new_user_path, class: 'btn btn-outline-primary' %> <br><br>
+      <% end %>
+    <% end %>
+  </div>
+</div>
