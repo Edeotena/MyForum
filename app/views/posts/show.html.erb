@@ -1,10 +1,17 @@
-<p style="color: green"><%= notice %></p>
-
-<%= render @post %>
-
-<div>
-  <%= link_to "Edit this post", edit_post_path(@post) %> |
-  <%= link_to "Back to posts", posts_path %>
-
-  <%= button_to "Destroy this post", @post, method: :delete %>
+<div class="card text-white bg-dark mb-3">
+  <div class="card-header">
+    <h3>Title: <small class="text-muted"> <%= @post.title %> </small></h3>
+  </div>
+  <div class="card-body">
+    <h3>Description: <small class="text-muted"> <%= @post.content %> </small></h3> <br>
+  </div>
+  <div class="card-footer">
+    <h5>Created by: <small class="text-muted"> <%= @post.author %></small>, Updated at: <small class="text-muted"> <%= @post.updated_at %> </small></h5>
+  </div>
 </div>
+
+<% if @current_user.name == @post.author %>
+  <%= link_to 'Edit post', edit_post_path(@post), class: 'btn btn-outline-primary' %>
+  <%= link_to 'Delete post', post_path(@post), method: :delete, class: 'btn btn-outline-danger'%>
+<% end %>
+<%= link_to 'Back to forum', posts_path , class: 'btn btn-outline-warning' %>
