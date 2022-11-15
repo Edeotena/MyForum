@@ -1,10 +1,19 @@
 <p style="color: green"><%= notice %></p>
 
-<%= render @comment %>
+<p>
+  <strong>Content:</strong>
+  <%= @comment.content %>
+</p>
 
-<div>
-  <%= link_to "Edit this comment", edit_comment_path(@comment) %> |
-  <%= link_to "Back to comments", comments_path %>
+<p>
+  <strong>User:</strong>
+  <%= @comment.user_id %>
+</p>
 
-  <%= button_to "Destroy this comment", @comment, method: :delete %>
-</div>
+<p>
+  <strong>Post:</strong>
+  <%= @comment.post_id %>
+</p>
+
+<%= link_to 'Edit', edit_comment_path(@comment) %> |
+<%= link_to 'Back', comments_path %>
