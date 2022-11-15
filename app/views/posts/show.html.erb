@@ -20,13 +20,13 @@
   <% end %>>
 <% end %>
 
-<%= link_to 'Back to forum', posts_path, class: 'btn btn-outline-warning' %>
-<%= link_to 'Create new comment to this post', new_comment_path, class: "btn btn-outline-info" %>
+<%= link_to 'Back to forum', posts_path, class: 'btn btn-outline-warning' %>&nbsp&nbsp
+<%= link_to 'Create new comment to this post', new_comment_path, class: "btn btn-outline-info" %>&nbsp&nbsp
 
 <div class="card text-white bg-dark mb-3">
   <h1 class="card-header">Comments:</h1>
   <% comments = Comment.all %>
-  <% comments.each do |comment| %>
+  <% comments.reverse_each do |comment| %>
     <% if comment.post_id == @post.id %>
       <div class="card text-white bg-dark mb-3">
         <div class="card-body">
@@ -39,11 +39,11 @@
       </div>
       <% if comment.user_id == @current_user.id %>
         <%= link_to 'Edit comment', edit_comment_path(comment), class: 'btn btn-outline-primary' %>&nbsp&nbsp
-        <%= link_to 'Delete comment', comment_path(comment), method: :delete, class: 'btn btn-outline-danger' %>
+        <%= link_to 'Delete comment', comment_path(comment), method: :delete, class: 'btn btn-outline-danger' %>&nbsp&nbsp
         <br><br><br>
       <% else %>
         <% if @current_user.superuser %>
-          <%= link_to 'Delete comment', comment_path(comment), method: :delete, class: 'btn btn-outline-danger' %>
+          <%= link_to 'Delete comment', comment_path(comment), method: :delete, class: 'btn btn-outline-danger' %>&nbsp&nbsp
           <br><br><br>
         <% end %>
       <% end %>

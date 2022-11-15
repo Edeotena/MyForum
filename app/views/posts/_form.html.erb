@@ -1,21 +1,35 @@
-<%= form_with(model: post) do |form| %>
+<div class="card text-white bg-dark mb-3 text-center mx-auto" style="width: 30rem;">
+  <div class="card-body">
+    <%= form_with(model: post) do |form| %>
+      <% if post.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
 
-  <div class="field">
-    <%= form.label :author %>
-    <%= form.text_field :author %>
-  </div>
+          <ul>
+            <% post.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
 
-  <div class="field">
-    <%= form.label :title %>
-    <%= form.text_field :title %>
-  </div>
+      <h1><%= "Enter post title:" %></h1>
+      <div class="field">
+        <i><%= form.label :title%></i>
+        <%= form.text_field :title, :size=>"50", :required => 'required' %>
+      </div>
 
-  <div class="field">
-    <%= form.label :content %>
-    <%= form.text_area :content %>
-  </div>
+      <h1><%= "Enter post content:" %></h1>
+      <div class="field">
+        <i><%= form.label :content %></i>
+        <%= form.text_area :content, :size=>"50", :required => 'required' %>
+      </div>
 
-  <div class="actions">
-    <%= form.submit %>
+      <div class="actions">
+        <br>
+        <%= form.submit "Post", class:'btn btn-outline-success' %> &nbsp&nbsp&nbsp
+        <%= link_to "Cancel", posts_path , class:'btn btn-outline-warning'%>
+      </div>
+    <% end %>
   </div>
-<% end %>
+</div>
