@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SessionController < ApplicationController
   skip_before_action :require_login, only: %i[login create]
   def login; end
@@ -12,12 +14,10 @@ class SessionController < ApplicationController
       redirect_to session_login_path
       flash[:warning] = 'Wrong login or password!'
     end
-
   end
 
   def logout
     sign_out
     redirect_to session_login_path
   end
-
 end
