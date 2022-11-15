@@ -22,7 +22,7 @@
       <div class="actions">
         <br>
         <%= form.submit class:'btn btn-outline-success' %> &nbsp&nbsp&nbsp
-        <%= link_to 'Back to forum', posts_path , class:'btn btn-outline-warning'%>
+        <%= link_to 'Back to post', post_path(JSON.parse(cookies[:post])) , class:'btn btn-outline-warning'%>
       </div>
     <% end %>
 

@@ -12,11 +12,15 @@
 </div>
 
 <% if @current_user&.name == @post.user_id %>
-  <%= link_to 'Edit post', edit_post_path(@post), class: 'btn btn-outline-primary' %>
-  <%= link_to 'Delete post', post_path(@post), method: :delete, class: 'btn btn-outline-danger' %>
+  <%= link_to 'Edit post', edit_post_path(@post), class: 'btn btn-outline-primary' %>&nbsp&nbsp
 <% end %>
+
+<% if @current_user.superuser or @current_user&.id == @post.user_id %>
+  <%= link_to 'Delete post', post_path(@post), method: :delete, class: 'btn btn-outline-danger'%>&nbsp&nbsp
+<% end %>
+
 <%= link_to 'Back to forum', posts_path, class: 'btn btn-outline-warning' %>
-<%= link_to 'New comment', new_comment_url, class: 'btn btn-outline-warning' %>
+<%= link_to 'Create new comment to this post', new_comment_path, class: "btn btn-outline-info" %>
 
 <div class="card text-white bg-dark mb-3">
   <h1 class="card-header">Comments:</h1>
@@ -24,9 +28,23 @@
   <% comments.each do |comment| %>
     <% if comment.post_id == @post.id %>
       <div class="card text-white bg-dark mb-3">
-        <%= comment.content %>
+        <div class="card-body">
+          <h3>Content:&nbsp<small class="text-muted"><%= comment.content %></small></h3>
+        </div>
+        <div class="card-footer">
+          <i>Updated at&nbsp</i> <%= comment.updated_at %> <i>by&nbsp</i> <%=  User.find_by(id: comment.user_id).try(:name) %>
+        </div>
       </div>
-    <% end %>
+      <% if comment.user_id == @current_user.id %>
+        <%= link_to 'Edit comment', edit_comment_path(comment), class: 'btn btn-outline-primary' %>&nbsp&nbsp
+        <%= link_to 'Delete comment', comment_path(comment), method: :delete, class: 'btn btn-outline-danger'%> <br><br><br>
+      <% else %>
+        <% if @current_user.superuser %>
+          <%= link_to 'Delete comment', comment_path(comment), method: :delete, class: 'btn btn-outline-danger'%> <br><br><br>
+        <% end %>
+      <% end %>
+
+<% end %>
   <% end %>
 </div>
 
