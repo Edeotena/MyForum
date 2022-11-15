@@ -51,6 +51,16 @@ class UsersController < ApplicationController
 
   # DELETE /users/1 or /users/1.json
   def destroy
+    posts = Post.all.where(:user_id == @user.id)
+    posts.each do |posts|
+      posts.destroy
+    end
+    comments = Comment.all.where(:user_id == @user.id)
+    comments.each do |comment|
+      comment.destroy
+    end
+
+
     @user.destroy
 
     respond_to do |format|

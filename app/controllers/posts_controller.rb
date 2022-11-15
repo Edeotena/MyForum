@@ -49,6 +49,11 @@ class PostsController < ApplicationController
 
   # DELETE /posts/1 or /posts/1.json
   def destroy
+    comments = Comment.all.where(:post_id == @post.id)
+    comments.each do |comment|
+      comment.destroy
+    end
+
     @post.destroy
 
     respond_to do |format|
