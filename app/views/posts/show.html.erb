@@ -11,12 +11,13 @@
   </div>
 </div>
 
-<% if @current_user&.name == @post.user_id %>
+<% if @post.user_id == @current_user.id %>
   <%= link_to 'Edit post', edit_post_path(@post), class: 'btn btn-outline-primary' %>&nbsp&nbsp
-<% end %>
-
-<% if @current_user.superuser or @current_user&.id == @post.user_id %>
-  <%= link_to 'Delete post', post_path(@post), method: :delete, class: 'btn btn-outline-danger'%>&nbsp&nbsp
+  <%= link_to 'Delete post', post_path(@post), method: :delete, class: 'btn btn-outline-danger' %>&nbsp&nbsp
+<% else %>
+  <% if @current_user.superuser %>
+    <%= link_to 'Delete post', post_path(@post), method: :delete, class: 'btn btn-outline-danger' %>&nbsp&nbsp
+  <% end %>>
 <% end %>
 
 <%= link_to 'Back to forum', posts_path, class: 'btn btn-outline-warning' %>
@@ -32,20 +33,23 @@
           <h3>Content:&nbsp<small class="text-muted"><%= comment.content %></small></h3>
         </div>
         <div class="card-footer">
-          <i>Updated at&nbsp</i> <%= comment.updated_at %> <i>by&nbsp</i> <%=  User.find_by(id: comment.user_id).try(:name) %>
+          <i>Updated at&nbsp</i> <%= comment.updated_at %>
+          <i>by&nbsp</i> <%= User.find_by(id: comment.user_id).try(:name) %>
         </div>
       </div>
       <% if comment.user_id == @current_user.id %>
         <%= link_to 'Edit comment', edit_comment_path(comment), class: 'btn btn-outline-primary' %>&nbsp&nbsp
-        <%= link_to 'Delete comment', comment_path(comment), method: :delete, class: 'btn btn-outline-danger'%> <br><br><br>
+        <%= link_to 'Delete comment', comment_path(comment), method: :delete, class: 'btn btn-outline-danger' %>
+        <br><br><br>
       <% else %>
         <% if @current_user.superuser %>
-          <%= link_to 'Delete comment', comment_path(comment), method: :delete, class: 'btn btn-outline-danger'%> <br><br><br>
+          <%= link_to 'Delete comment', comment_path(comment), method: :delete, class: 'btn btn-outline-danger' %>
+          <br><br><br>
         <% end %>
       <% end %>
 
-<% end %>
+    <% end %>
   <% end %>
 </div>
 
-<% cookies[:post] = {:value => @post.id.to_json, :expires => 10.days.from_now } %>
+<% cookies[:post] = { :value => @post.id.to_json, :expires => 10.days.from_now } %>
